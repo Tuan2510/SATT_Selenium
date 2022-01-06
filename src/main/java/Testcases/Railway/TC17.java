@@ -32,7 +32,7 @@ public class TC17 extends TestBase{
 
         Calendar now = Calendar.getInstance();
         now.add(Calendar.DAY_OF_MONTH,5);
-        String departDate = now.get(Calendar.DAY_OF_MONTH)+"/"+ now.get(Calendar.MONTH)+1 +"/"+now.get(Calendar.YEAR);
+        String departDate = Integer.parseInt(String.valueOf(now.get(Calendar.MONTH)+1)) +"/"+  now.get(Calendar.DAY_OF_MONTH)+"/"+now.get(Calendar.YEAR);
         String departFrom = dataTC17.get("departFrom").getAsString();
         String arriveAt = dataTC17.get("arriveAt").getAsString();
         String seatType = dataTC17.get("seatType").getAsString();

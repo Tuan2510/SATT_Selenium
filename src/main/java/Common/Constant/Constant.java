@@ -9,5 +9,5 @@ public class Constant {
 
     public static final String BOOK_TICKET_PAGE_TITLE = "Safe Railway - Book Ticket";
     public static final String LOGIN_PAGE_TITLE = "Safe Railway - Login";
-    public static final String HOME_PAGE_TITLE = "Safe Railway - Selenium Test";
+    public static final String HOME_PAGE_TITLE = "Safe Railway - Selenium Automation";
 }

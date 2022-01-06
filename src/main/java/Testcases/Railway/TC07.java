@@ -22,7 +22,8 @@ public class TC07 extends TestBase{
         homePage.open();
         homePage.gotoRegisterPage();
         homePage.open();
-        homePage.gotoLoginPage();
+        homePage.gotoRegisterPage();
+
         String filePath = Utilities.getProjectPath() + "\\main\\java\\Common\\Constant\\data.json";
         JsonObject jsonObject = JsonHelper.getJsonObject(filePath);
         JsonObject dataTC07 = jsonObject.getAsJsonObject(this.getClass().getSimpleName());

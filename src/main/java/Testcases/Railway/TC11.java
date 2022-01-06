@@ -26,10 +26,10 @@ public class TC11 extends TestBase{
 
         String actualErrorMsg = registerPage.getMessageError();
         String expectedErrorMsg = "There're errors in the form. Please correct the errors and try again.";
-        String actualPasswordErrorMsg = registerPage.getMessageError();
+        String actualPasswordErrorMsg = registerPage.getPasswordMessageError();
         String expectedPasswordErrorMsg = "Invalid password length";
-        String actualPIDErrorMsg = registerPage.getMessageError();
-        String expectedPIDErrorMsg = "Invalid ID length.";
+        String actualPIDErrorMsg = registerPage.getPIDMessageError();
+        String expectedPIDErrorMsg = "Invalid ID length";
 
         Assert.assertEquals(actualErrorMsg, expectedErrorMsg, "Error message is not displayed as expected.");
         Assert.assertEquals(actualPasswordErrorMsg, expectedPasswordErrorMsg, "Password error message is not displayed as expected.");
