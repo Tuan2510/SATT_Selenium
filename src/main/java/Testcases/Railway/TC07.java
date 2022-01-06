@@ -1,36 +1,28 @@
 package Testcases.Railway;
 
-import Common.Common.JsonHelper;
-import Common.Common.Utilities;
-import Common.Constant.Constant;
-import Common.Utils.Utils;
-import PageObjects.Railway.GeneralPage;
+import Common.Constant;
+import Common.Utils;
 import PageObjects.Railway.HomePage;
 import PageObjects.Railway.RegisterPage;
-import com.google.gson.JsonObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class TC07 extends TestBase{
-    @Test
-    public void TC07() throws Exception {
-        System.out.println("TC07 - User can create new account");
-        HomePage homePage = new HomePage();
-        RegisterPage registerPage = new RegisterPage();
-        Utils utils = new Utils();
+public class TC07 extends TestBase {
+    HomePage homePage = new HomePage();
+    RegisterPage registerPage = new RegisterPage();
+    Utils utils = new Utils();
 
+    @Test(description = "TC07 - User can create new account")
+    public void TC07() {
+        System.out.println("1. Navigate to QA Railway Website");
         homePage.open();
-        homePage.gotoRegisterPage();
-        homePage.open();
+
+        System.out.println("2. Click on \"Register\" tab");
         homePage.gotoRegisterPage();
 
-        String filePath = Utilities.getProjectPath() + "\\main\\java\\Common\\Constant\\data.json";
-        JsonObject jsonObject = JsonHelper.getJsonObject(filePath);
-        JsonObject dataTC07 = jsonObject.getAsJsonObject(this.getClass().getSimpleName());
-        String password = dataTC07.get("password").getAsString();
-        String reEnterPassword = dataTC07.get("re_enter_password").getAsString();
-        String pid = dataTC07.get("pid").getAsString();
-        registerPage.register(utils.randomEmailAddressByTime(),password,reEnterPassword,pid);
+        System.out.println("3. Enter valid information into all fields");
+        System.out.println("4. Click on \"Register\" button");
+        registerPage.register(utils.randomEmailAddressByTime(), Constant.PASSWORD, Constant.PASSWORD, Constant.PID);
 
         String actualMsg = registerPage.getMessage();
         String expectedMsg = "Thank you for registering your account.";

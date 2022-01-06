@@ -1,10 +1,10 @@
 package PageObjects.Railway;
 
-import Common.Constant.Constant;
+import Common.Constant;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-public class RegisterPage extends GeneralPage{
+public class RegisterPage extends GeneralPage {
     //locators
     private final By txtEmail = By.xpath("//input[@id='email']");
     private final By txtPassword = By.xpath("//input[@id='password']");
@@ -17,39 +17,44 @@ public class RegisterPage extends GeneralPage{
     private final By lblPIDMessageError = By.xpath("//label[@for='pid' and @class='validation-error']");
 
     //elements
-    protected WebElement getTxtEmail(){
+    protected WebElement getTxtEmail() {
         return Constant.WEBDRIVER.findElement(txtEmail);
     }
-    protected WebElement getTxtPassword(){
+
+    protected WebElement getTxtPassword() {
         return Constant.WEBDRIVER.findElement(txtPassword);
     }
-    protected WebElement getTxtConfirmPassword(){
+
+    protected WebElement getTxtConfirmPassword() {
         return Constant.WEBDRIVER.findElement(txtConfirmPassword);
     }
-    protected WebElement getTxtPid(){
+
+    protected WebElement getTxtPid() {
         return Constant.WEBDRIVER.findElement(txtPid);
     }
-    protected WebElement getBtnRegister(){
+
+    protected WebElement getBtnRegister() {
         return Constant.WEBDRIVER.findElement(btnRegister);
     }
-    protected WebElement getLblInformation(){
+
+    protected WebElement getLblInformation() {
         return Constant.WEBDRIVER.findElement(lblInformation);
     }
-    protected WebElement getLblMessageError(){
+
+    protected WebElement getLblMessageError() {
         return Constant.WEBDRIVER.findElement(lblMessageError);
     }
 
-    protected WebElement getLblPasswordMessageError(){
+    protected WebElement getLblPasswordMessageError() {
         return Constant.WEBDRIVER.findElement(lblPasswordMessageError);
     }
 
-    protected WebElement getLblPIDMessageError(){
+    protected WebElement getLblPIDMessageError() {
         return Constant.WEBDRIVER.findElement(lblPIDMessageError);
     }
 
     //methods
-    public void register(String email, String password, String confirmPassword, String pid){
-        //submit login credentials
+    public void register(String email, String password, String confirmPassword, String pid) {
         this.getTxtEmail().sendKeys(email);
         this.getTxtPassword().sendKeys(password);
         this.getTxtConfirmPassword().sendKeys(confirmPassword);
@@ -57,36 +62,20 @@ public class RegisterPage extends GeneralPage{
         this.getBtnRegister().click();
     }
 
-    public String getMessage(){
-        try{
-            return this.getLblInformation().getText();
-        }catch (Exception e){
-            return "";
-        }
+    public String getMessage() {
+        return this.getLblInformation().getText();
     }
 
-    public String getMessageError(){
-        try{
-            return this.getLblMessageError().getText();
-        }catch (Exception e){
-            return "";
-        }
+    public String getMessageError() {
+        return this.getLblMessageError().getText();
     }
 
-    public String getPasswordMessageError(){
-        try{
-            return this.getLblPasswordMessageError().getText();
-        }catch (Exception e){
-            return "";
-        }
+    public String getPasswordMessageError() {
+        return this.getLblPasswordMessageError().getText();
     }
 
-    public String getPIDMessageError(){
-        try{
-            return this.getLblPIDMessageError().getText();
-        }catch (Exception e){
-            return "";
-        }
+    public String getPIDMessageError() {
+        return this.getLblPIDMessageError().getText();
     }
 
 

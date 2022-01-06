@@ -1,15 +1,15 @@
 package PageObjects.Railway;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebElement;
 
-import Common.Constant.Constant;
+import Common.Constant;
+import org.testng.internal.EclipseInterface;
 
 public class GeneralPage {
     //locators
     private final By tabHome = By.xpath("//a/span[text()='Home']");
+    private final By tabContact = By.xpath("//a[@href='/Page/Contact.cshtml']");
     private final By tabLogin = By.xpath("//div[@id='menu']//a[@href='/Account/Login.cshtml']");
     private final By tabLogout = By.xpath("//div[@id='menu']//a[@href='/Account/Logout']");
     private final By tabBookTicket = By.xpath("//div[@id='menu']//a[@href='/Page/BookTicketPage.cshtml']");
@@ -23,6 +23,10 @@ public class GeneralPage {
     //elements
     protected WebElement getTabHome() {
         return Constant.WEBDRIVER.findElement(tabHome);
+    }
+
+    protected WebElement getTabContact() {
+        return Constant.WEBDRIVER.findElement(tabContact);
     }
 
     protected WebElement getTabLogin() {
@@ -61,14 +65,9 @@ public class GeneralPage {
         return Constant.WEBDRIVER.findElement(pageTitle);
     }
 
-
     //methods
     public String getWelcomeMessage() {
-        try {
-            return this.getLblWelcomeMessage().getText();
-        } catch (Exception e) {
-            return "";
-        }
+        return this.getLblWelcomeMessage().getText();
     }
 
     public void loggingOut() {
@@ -76,15 +75,15 @@ public class GeneralPage {
     }
 
     public String getPageH1() {
-        try {
-            return this.getTitle().getText();
-        } catch (Exception e) {
-            return "";
-        }
+        return this.getTitle().getText();
     }
 
     public void gotoLoginPage() {
         this.getTabLogin().click();
+    }
+
+    public void gotoContactPage() {
+        this.getTabContact().click();
     }
 
     public void gotoBookTicketPage() {
@@ -115,11 +114,10 @@ public class GeneralPage {
         return Constant.WEBDRIVER.getTitle();
     }
 
-    public Boolean isDisplayedTabLogout(){
+    public Boolean isDisplayedTabLogout() {
         try {
             return Constant.WEBDRIVER.findElement(tabLogout).isDisplayed();
-        }catch (NotFoundException e){
-            System.out.println("Cannot locate this element");
+        }catch (Exception e){
             return false;
         }
     }

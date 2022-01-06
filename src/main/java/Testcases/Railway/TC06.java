@@ -1,30 +1,25 @@
 package Testcases.Railway;
 
-import Common.Common.JsonHelper;
-import Common.Common.Utilities;
-import Common.Constant.Constant;
-import PageObjects.Railway.GeneralPage;
+import Common.Constant;
 import PageObjects.Railway.HomePage;
 import PageObjects.Railway.LoginPage;
-import com.google.gson.JsonObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class TC06 extends TestBase{
-    @Test
-    public void TC06() throws Exception {
-        System.out.println("TC06 - User is redirected to Home page after logging out ");
-        HomePage homePage = new HomePage();
-        LoginPage loginPage = new LoginPage();
+    HomePage homePage = new HomePage();
+    LoginPage loginPage = new LoginPage();
 
+    @Test(description = "TC06 - User is redirected to Home page after logging out ")
+    public void TC06() throws Exception {
+        System.out.println("1. Navigate to QA Railway Website");
         homePage.open();
+        System.out.println("2. Login with valid Email and Password");
         homePage.gotoLoginPage();
-        String filePath = Utilities.getProjectPath() + "\\main\\java\\Common\\Constant\\data.json";
-        JsonObject jsonObject = JsonHelper.getJsonObject(filePath);
-        JsonObject dataTC06 = jsonObject.getAsJsonObject(this.getClass().getSimpleName());
-        String email = dataTC06.get("email").getAsString();
-        String password = dataTC06.get("password").getAsString();
-        loginPage.login(email, password);
+        loginPage.login(Constant.USERNAME, Constant.PASSWORD);
+        System.out.println("3. Click on \"Contact\" tab");
+        homePage.gotoContactPage();
+        System.out.println("4. Click on \"Log out\" tab");
         homePage.loggingOut();
 
         String actualMsg = homePage.getPageTitle();

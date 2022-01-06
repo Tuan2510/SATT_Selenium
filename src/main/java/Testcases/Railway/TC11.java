@@ -1,28 +1,26 @@
 package Testcases.Railway;
 
-import Common.Common.JsonHelper;
-import Common.Common.Utilities;
-import Common.Constant.Constant;
+import Common.Constant;
 import PageObjects.Railway.HomePage;
 import PageObjects.Railway.RegisterPage;
-import com.google.gson.JsonObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class TC11 extends TestBase{
-    @Test
-    public void TC11() throws Exception {
-        System.out.println("TC11 - User can't create account while password and PID fields are empty");
-        HomePage homePage = new HomePage();
-        RegisterPage registerPage = new RegisterPage();
+    HomePage homePage = new HomePage();
+    RegisterPage registerPage = new RegisterPage();
 
+    @Test(description = "TC11 - User can't create account while password and PID fields are empty")
+    public void TC11() throws Exception {
+        System.out.println("1. Navigate to QA Railway Website");
         homePage.open();
+
+        System.out.println("2. Click on \"Register\" tab");
         homePage.gotoRegisterPage();
-        String filePath = Utilities.getProjectPath() + "\\main\\java\\Common\\Constant\\data.json";
-        JsonObject jsonObject = JsonHelper.getJsonObject(filePath);
-        JsonObject dataTC11 = jsonObject.getAsJsonObject(this.getClass().getSimpleName());
-        String email = dataTC11.get("email").getAsString();
-        registerPage.register(email, "","","");
+
+        System.out.println("3. Enter valid email address and leave other fields empty");
+        System.out.println("4. Click on \"Register\" button");
+        registerPage.register(Constant.USERNAME, "","","");
 
         String actualErrorMsg = registerPage.getMessageError();
         String expectedErrorMsg = "There're errors in the form. Please correct the errors and try again.";

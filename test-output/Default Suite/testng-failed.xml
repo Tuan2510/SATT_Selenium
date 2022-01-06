@@ -6,7 +6,8 @@
       <class name="Testcases.Railway.TC17">
         <methods>
           <include name="beforeMethod"/>
-          <include name="TC17"/>
+          <include name="beforeTest"/>
+          <include name="TC17" invocation-numbers="0"/>
           <include name="afterMethod"/>
         </methods>
       </class> <!-- Testcases.Railway.TC17 -->

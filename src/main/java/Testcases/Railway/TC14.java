@@ -1,51 +1,72 @@
 package Testcases.Railway;
 
-import Common.Common.JsonHelper;
-import Common.Common.Utilities;
-import Common.Constant.Constant;
+import Common.Constant;
+import Common.JsonHelper;
+import Common.Utils;
 import PageObjects.Railway.BookTicketPage;
 import PageObjects.Railway.HomePage;
 import PageObjects.Railway.LoginPage;
-import PageObjects.Railway.RegisterPage;
 import com.google.gson.JsonObject;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import org.testng.Assert;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.awt.print.Book;
-import java.util.Calendar;
-
 public class TC14 extends TestBase {
-    @Test
-    public void TC14() throws Exception {
-        System.out.println("TC14 - User can book many tickets at a time");
-        HomePage homePage = new HomePage();
-        BookTicketPage bookTicketPage = new BookTicketPage();
-        homePage.open();
 
-        homePage.gotoLoginPage();
-        LoginPage loginPage = new LoginPage();
-        String filePath = Utilities.getProjectPath() + "\\main\\java\\Common\\Constant\\data.json";
+//    @BeforeTest(description = "Pre-condition: Create and activate a new account")
+//    public void beforeTest(){
+//
+//    }
+
+    @DataProvider(name = "data-provider")
+    public Object[][] dataProvider() throws Exception {
+        System.out.println("1");
+        String filePath = Utils.getProjectPath() + "\\Data\\data.json";
+        System.out.println("2");
         JsonObject jsonObject = JsonHelper.getJsonObject(filePath);
+        System.out.println("3");
         JsonObject dataTC14 = jsonObject.getAsJsonObject(this.getClass().getSimpleName());
-        String email = dataTC14.get("email").getAsString();
-        String password = dataTC14.get("password").getAsString();
-
-        Calendar now = Calendar.getInstance();
-        now.add(Calendar.DAY_OF_MONTH,5);
-        String departDate = now.get(Calendar.DAY_OF_MONTH)+"/"+ now.get(Calendar.MONTH)+1 +"/"+now.get(Calendar.YEAR);
+        String departDate = dataTC14.get("departDate").getAsString();
         String departFrom = dataTC14.get("departFrom").getAsString();
         String arriveAt = dataTC14.get("arriveAt").getAsString();
         String seatType = dataTC14.get("seatType").getAsString();
-        String ticketAmount = String.valueOf(dataTC14.get("ticketAmount").getAsInt());
+        String ticketAmount = dataTC14.get("ticketAmount").getAsString();
 
-        loginPage.login(email, password).gotoBookTicketPage();
-        bookTicketPage.bookTicket(departDate,departFrom, arriveAt,seatType,ticketAmount);
+        Object[][] object = new Object[][]{
+                {departDate, departFrom, arriveAt, seatType, ticketAmount}
+        };
+        return object;
+    }
+
+    HomePage homePage = new HomePage();
+    LoginPage loginPage = new LoginPage();
+    BookTicketPage bookTicketPage = new BookTicketPage();
+
+    @Test(description = "TC14 - User can book many tickets at a time", dataProvider = "data-provider")
+    public void TC14(String departDate,String departFrom,String arriveAt,String seatType,String ticketAmount) {
+        System.out.println("1. Navigate to QA Railway Website");
+        homePage.open();
+
+        System.out.println("2. Login with a valid account ");
+        homePage.gotoLoginPage();
+        loginPage.login(Constant.USERNAME, Constant.PASSWORD);
+
+        System.out.println("3. Click on 'Book ticket' tab");
+        homePage.gotoBookTicketPage();
+
+        System.out.println("4. Select a Depart date from the list");
+        System.out.println("5. Select 'Nha Trang' for 'Depart from' and 'Sài Gòn' for 'Arrive at'.");
+        System.out.println("6. Select 'Soft seat with air conditioner' for 'Seat type'");
+        System.out.println("7. Select '5' for 'Ticket amount'");
+        System.out.println("8. Click on 'Book ticket' button");
+        String autoDepartDate = Utils.createDepartDate();
+        bookTicketPage.bookTicket(autoDepartDate, departFrom, arriveAt, seatType, ticketAmount);
 
         String actualMsg = bookTicketPage.getSuccessMessage();
         String expectedMsg = "Ticket booked successfully!";
         String actualDepartDate = bookTicketPage.getTicketDepartDate();
-        String expectedDepartDate = departDate;
+        String expectedDepartDate = autoDepartDate;
         String actualDepartStation = bookTicketPage.getTicketDepartStation();
         String expectedDepartStation = departFrom;
         String actualArriveStation = bookTicketPage.getTicketArriveStation();
@@ -53,7 +74,7 @@ public class TC14 extends TestBase {
         String actualSeatType = bookTicketPage.getTicketSeatType();
         String expectedSeatType = seatType;
         String actualTicketAmount = bookTicketPage.getTicketAmount();
-        String expectedTicketAmount = ticketAmount;
+        String expectedTicketAmount = String.valueOf(ticketAmount);
 
         Assert.assertEquals(actualMsg, expectedMsg, "Error message is not displayed as expected.");
         Assert.assertEquals(actualDepartDate, expectedDepartDate, "Depart date is not displayed as expected.");
